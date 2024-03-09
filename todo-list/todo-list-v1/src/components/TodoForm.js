@@ -8,7 +8,7 @@ export const TodoForm = ({ addTodo }) => {
 
     addTodo(value);
 
-    // console.log(value);
+    // console.log(todos);
   };
 
   return (
