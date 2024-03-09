@@ -8,6 +8,7 @@ export const TodoForm = ({ addTodo }) => {
 
     addTodo(value);
 
+    setValue("");
     // console.log(todos);
   };
 
@@ -16,6 +17,7 @@ export const TodoForm = ({ addTodo }) => {
       <input
         type="text"
         className="todo-input"
+        value={value}
         placeholder="What is the task today?"
         onChange={(e) => setValue(e.target.value)}
       />

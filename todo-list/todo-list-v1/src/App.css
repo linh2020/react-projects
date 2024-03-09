@@ -47,6 +47,15 @@ h1 {
   color: #fff;
 }
 
+.todo-input-edit {
+  border: 1px solid #073553;
+  background: #0288d1;
+  color: #fff;
+  padding: 0.2rem;
+  padding-right: 5rem;
+  border-radius: 5px;
+}
+
 .todo-input::placeholder {
   color: #ffffff4d;
 }
@@ -68,6 +77,7 @@ h1 {
   padding: 0.75rem 1rem;
   border-radius: 5px;
   margin-bottom: 1rem;
+  height: 3rem;
 }
 
 .fa-trash {
