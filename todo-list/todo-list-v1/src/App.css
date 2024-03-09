@@ -80,6 +80,12 @@ h1 {
   height: 3rem;
 }
 
+.todo-features-btn {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
 .fa-trash {
   margin-left: 0.75rem;
 }

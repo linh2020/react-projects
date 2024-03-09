@@ -34,7 +34,9 @@ export const TodoWrapper = () => {
 
   const editTodoContent = (id, content) =>
     setTodos(
-      todos.map((todo) => (todo.id === id ? { ...todo, task: content } : todo))
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, task: content, completed: false } : todo
+      )
     );
 
   useEffect(() => console.log(todos), [todos]);
