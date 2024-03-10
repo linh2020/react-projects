@@ -5,7 +5,18 @@ import { v4 as uuidv4 } from "uuid";
 uuidv4();
 
 export const TodoWrapper = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() =>
+    localStorage.getItem("todos")
+      ? JSON.parse(localStorage.getItem("todos"))
+      : []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+    // console.log(localStorage.getItem("todos"));
+  }, [todos]);
+
+  console.log(typeof todos);
 
   const addTodo = (todo) => {
     setTodos([
