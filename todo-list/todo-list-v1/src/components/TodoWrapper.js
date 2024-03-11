@@ -16,8 +16,6 @@ export const TodoWrapper = () => {
     // console.log(localStorage.getItem("todos"));
   }, [todos]);
 
-  console.log(typeof todos);
-
   const addTodo = (todo) => {
     setTodos([
       ...todos,
