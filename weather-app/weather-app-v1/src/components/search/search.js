@@ -10,17 +10,7 @@ const Search = ({ onSearchChange }) => {
     console.log("Handle OnChange");
     setSearch(searchData);
     onSearchChange(searchData);
-    console.log(searchData.target.value);
-  };
-
-  const fetchData = () => {
-    return fetch(`${GEO_API_URL}/cities?minPopulation=1000000`, geoApiOptions)
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-        setMyData(JSON.stringify(response));
-      })
-      .catch((err) => console.log(err));
+    console.log(searchData);
   };
 
   const loadOptions = (inputValue) => {
@@ -31,15 +21,17 @@ const Search = ({ onSearchChange }) => {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
-        return { options: [] };
+
+        return {
+          options: response.data.map((city) => {
+            return {
+              value: `${city.latitude} ${city.longitude}`,
+              label: `${city.name} ${city.countryCode}`,
+            };
+          }),
+        };
       })
       .catch((err) => console.log(err));
-  };
-
-  const handleOnChange1 = (e) => {
-    onSearchChange(e);
-    console.log(e);
-    console.log("Hello");
   };
 
   return (
@@ -49,32 +41,9 @@ const Search = ({ onSearchChange }) => {
         debounceTimeout={600}
         value={search}
         onChange={handleOnChange}
-        // loadOptions={loadOptions}
+        loadOptions={loadOptions}
+        // isMulti // allow multiple options
       />
-
-      <AsyncPaginate
-        placeholder="Testing "
-        debounceTimeout={600}
-        value={search}
-        onChange={handleOnChange1}
-        // loadOptions={loadOptions}
-      />
-      <input
-        type="text"
-        // value={myData}
-        onChange={(e) => {
-          console.log(e);
-          setMyData(e.target.value);
-        }}
-      />
-
-      <br />
-      <br />
-      <div>
-        <button onClick={fetchData}>Fetch Data</button>
-      </div>
-      <div>Search: {myData}</div>
-      
     </>
   );
 };
