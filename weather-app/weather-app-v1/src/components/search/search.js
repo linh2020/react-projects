@@ -10,6 +10,7 @@ const Search = ({ onSearchChange }) => {
     console.log("Handle OnChange");
     setSearch(searchData);
     onSearchChange(searchData);
+    console.log("search - searchData");
     console.log(searchData);
   };
 
@@ -43,6 +44,7 @@ const Search = ({ onSearchChange }) => {
         onChange={handleOnChange}
         loadOptions={loadOptions}
         // isMulti // allow multiple options
+        // isSearchable
       />
     </>
   );
