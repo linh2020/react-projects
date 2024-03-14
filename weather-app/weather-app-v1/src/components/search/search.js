@@ -4,7 +4,6 @@ import { GEO_API_URL, geoApiOptions } from "../../api";
 
 const Search = ({ onSearchChange }) => {
   const [search, setSearch] = useState(null);
-  const [myData, setMyData] = useState(null);
 
   const handleOnChange = (searchData) => {
     console.log("Handle OnChange");
@@ -14,26 +13,59 @@ const Search = ({ onSearchChange }) => {
     console.log(searchData);
   };
 
-  const loadOptions = (inputValue) => {
-    return fetch(
+  const loadOptions = async (inputValue) => {
+    const fetchData = await fetch(
       `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
       geoApiOptions
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
+    );
+    console.log(fetchData);
 
+    const res = await fetchData.json();
+    console.log(res);
+
+    const data = {
+      options: res.data.map((city) => {
         return {
-          options: response.data.map((city) => {
-            return {
-              value: `${city.latitude} ${city.longitude}`,
-              label: `${city.name} ${city.countryCode}`,
-            };
-          }),
+          value: `${city.latitude} - ${city.longitude}`, // value : "24.451111111 - 54.396944444"
+          label: `${city.name} - ${city.countryCode}`, // label : "Abu Dhabi - AE"
         };
-      })
-      .catch((err) => console.log(err));
+      }),
+    };
+
+    console.log("fetching data");
+    console.log(data); // {options: Array(5)}
+
+    return data;
   };
+
+  // const loadOptions = (inputValue) => {
+  //   return fetch(
+  //     `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
+  //     geoApiOptions
+  //   )
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((response) => {
+  //       console.log(response);
+
+  //       return {
+  //         options: response.data.map((city) => {
+  //           return {
+  //             value: `${city.latitude} ${city.longitude}`,
+  //             label: `${city.name} ${city.countryCode}`,
+  //           };
+  //         }),
+  //       };
+  //     })
+  //     .catch((err) => {
+  //       console.error(err); // Log the error
+  //       throw err; // Propagate the error further
+  //     });
+  // };
 
   return (
     <>
