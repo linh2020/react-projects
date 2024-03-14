@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
 import { GEO_API_URL, geoApiOptions } from "../../api";
 
@@ -10,32 +10,37 @@ const Search = ({ onSearchChange }) => {
     setSearch(searchData);
     onSearchChange(searchData);
     console.log("search - searchData");
-    console.log(searchData);
+    console.log(searchData); // {value: '24.451111111 - 54.396944444', label: 'Abu Dhabi - AE'}
   };
 
   const loadOptions = async (inputValue) => {
-    const fetchData = await fetch(
-      `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
-      geoApiOptions
-    );
-    console.log(fetchData);
+    try {
+      const fetchData = await fetch(
+        `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
+        geoApiOptions
+      );
+      console.log(fetchData);
 
-    const res = await fetchData.json();
-    console.log(res);
+      const resData = await fetchData.json();
+      console.log(resData);
 
-    const data = {
-      options: res.data.map((city) => {
-        return {
-          value: `${city.latitude} - ${city.longitude}`, // value : "24.451111111 - 54.396944444"
-          label: `${city.name} - ${city.countryCode}`, // label : "Abu Dhabi - AE"
-        };
-      }),
-    };
+      const desiredData = {
+        options: resData.data.map((city) => {
+          return {
+            value: `${city.latitude} - ${city.longitude}`, // value : "24.451111111 - 54.396944444"
+            label: `${city.name} - ${city.countryCode}`, // label : "Abu Dhabi - AE"
+          };
+        }),
+      };
 
-    console.log("fetching data");
-    console.log(data); // {options: Array(5)}
+      console.log("fetching data");
+      console.log(desiredData); // {options: Array(5)}
 
-    return data;
+      return desiredData;
+    } catch (error) {
+      console.log(error);
+      // return { options: [] };
+    }
   };
 
   // const loadOptions = (inputValue) => {
@@ -71,7 +76,7 @@ const Search = ({ onSearchChange }) => {
     <>
       <AsyncPaginate
         placeholder="Search for city"
-        debounceTimeout={600}
+        debounceTimeout={1500} // prevent to response's errors
         value={search}
         onChange={handleOnChange}
         loadOptions={loadOptions}
