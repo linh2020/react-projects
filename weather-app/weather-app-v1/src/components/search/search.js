@@ -76,7 +76,7 @@ const Search = ({ onSearchChange }) => {
     <>
       <AsyncPaginate
         placeholder="Search for city"
-        debounceTimeout={1500} // prevent to response's errors
+        debounceTimeout={2000} // prevent to response's errors
         value={search}
         onChange={handleOnChange}
         loadOptions={loadOptions}
