@@ -7,18 +7,25 @@ const Search = ({ onSearchChange }) => {
 
   const handleOnChange = (searchData) => {
     console.log("Handle OnChange");
+    console.log("Search - searchData");
+    console.log(searchData);
+    // {value: '24.451111111 - 54.396944444', label: 'Abu Dhabi - AE'}
+
     setSearch(searchData);
+
     onSearchChange(searchData);
-    console.log("search - searchData");
-    console.log(searchData); // {value: '24.451111111 - 54.396944444', label: 'Abu Dhabi - AE'}
   };
 
   const loadOptions = async (inputValue) => {
+    console.log("inputValue");
+    console.log(inputValue);
+
     try {
       const fetchData = await fetch(
         `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
         geoApiOptions
       );
+
       console.log(fetchData);
 
       const resData = await fetchData.json();

@@ -11,11 +11,12 @@ function App() {
 
   const handleOnSearchChange = (searchData) => {
     console.log("App - searchData");
-    console.log(searchData); // label: "Abu Dhabi - AE" value: "24.451111111 - 54.396944444"
+    console.log(searchData);
+    // label: "Abu Dhabi - AE" value: "24.451111111 - 54.396944444"
     // latitude: 24.451111111 longitude: 54.396944444
 
     const [lat, lon] = searchData.value.split(" ");
-    // const [name, countryCode] = searchData.label.split("-");
+    // latitude: 24.451111111 longitude: 54.396944444
 
     const currentWeatherFetch = fetch(
       `${WEATHER_API_URL}/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
@@ -36,7 +37,10 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  console.log("currentWeather");
   console.log(currentWeather);
+  console.log("forecast");
+  console.log(forecast);
 
   return (
     <div className="container">
