@@ -1,17 +1,46 @@
 import "./App.css";
 import Search from "./components/search/Search.js";
 import CurrentWeather from "./currentWeather/CurrentWeather.js";
+import { WEATHER_API_URL, WEATHER_API_KEY } from "./api.js";
+import { useState } from "react";
 
 function App() {
+  const [currentWeather, setCurrentWeather] = useState(null);
+  const [forecast, setForecast] = useState(null);
+
   const handleOnSearchChange = (searchData) => {
     console.log("App - searchData");
-    console.log(searchData);
+    console.log(searchData); // label: "Abu Dhabi - AE" value: "24.451111111 - 54.396944444"
+    // latitude: 24.451111111 longitude: 54.396944444
+
+    const [lat, lon] = searchData.value.split(" ");
+    // const [name, countryCode] = searchData.label.split("-");
+
+    const currentWeatherFetch = fetch(
+      `${WEATHER_API_URL}/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
+    );
+
+    const forecastFetch = fetch(
+      `${WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
+    );
+
+    Promise.all([currentWeatherFetch, forecastFetch])
+      .then(async (response) => {
+        const weatherResponse = await response[0].json();
+        const forecastResponse = await response[1].json();
+
+        setCurrentWeather({ city: searchData.label, ...weatherResponse });
+        setForecast({ city: searchData.label, ...forecastResponse });
+      })
+      .catch((err) => console.log(err));
   };
+
+  console.log(currentWeather);
 
   return (
     <div className="container">
       <Search onSearchChange={handleOnSearchChange} />
-      <CurrentWeather />
+      {currentWeather && <CurrentWeather data={currentWeather} />}
     </div>
   );
 }

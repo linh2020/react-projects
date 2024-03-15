@@ -27,7 +27,7 @@ const Search = ({ onSearchChange }) => {
       const desiredData = {
         options: resData.data.map((city) => {
           return {
-            value: `${city.latitude} - ${city.longitude}`, // value : "24.451111111 - 54.396944444"
+            value: `${city.latitude} ${city.longitude}`, // value : "24.451111111 - 54.396944444"
             label: `${city.name} - ${city.countryCode}`, // label : "Abu Dhabi - AE"
           };
         }),
