@@ -54,7 +54,9 @@ export default function ToDoList_UseState() {
   return (
     <>
       <h1>Prague itinerary</h1>
+
       <AddTask onAddTask={onAddTask} />
+
       <TaskList
         tasks={tasks}
         onChangeTask={onChangeTask}

@@ -12,7 +12,13 @@ export const AddTask = ({ onAddTask }) => {
       />
       <button
         onClick={() => {
+          console.log("Text before setState:", text); // Logging the current state before updating
+
           setText("");
+          
+          // In React, setting state with useState is asynchronous. This means that calling setText('') does not immediately update the text state variable. Instead, React queues the state update, and the component's re-rendering occurs with the new state value at some point in the future.
+          console.log("Text after setState:", text); // Logging the state immediately after calling setState
+
           onAddTask(text);
         }}
       >
