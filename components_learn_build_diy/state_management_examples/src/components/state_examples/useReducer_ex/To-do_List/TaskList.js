@@ -1,18 +1,22 @@
 import React from "react";
 
-export default function TaskList({ tasks, onEditTask }) {
+export default function TaskList({ tasks, onChangeTask, onDeleteTask }) {
   return (
     <ul>
       {tasks.map((task) => (
         <li key={task.id}>
-          <Task task={task} onEditTask={onEditTask} />
+          <Task
+            task={task}
+            onChangeTask={onChangeTask}
+            onDeleteTask={onDeleteTask}
+          />
         </li>
       ))}
     </ul>
   );
 }
 
-const Task = ({ task, onEditTask }) => {
+const Task = ({ task, onChangeTask, onDeleteTask }) => {
   let taskContent;
 
   if (task.isEditing) {
@@ -22,14 +26,12 @@ const Task = ({ task, onEditTask }) => {
           type="text"
           value={task.text}
           onChange={(e) => {
-            let action = "update";
-            onEditTask(action, { ...task, text: e.target.value });
+            onChangeTask({ ...task, text: e.target.value });
           }}
         />
         <button
           onClick={() => {
-            let action = "save";
-            onEditTask(action, { ...task, isEditing: false });
+            onChangeTask({ ...task, isEditing: false });
           }}
         >
           Save
@@ -42,8 +44,7 @@ const Task = ({ task, onEditTask }) => {
         {task.text}
         <button
           onClick={() => {
-            let action = "edit";
-            onEditTask(action, { ...task, isEditing: true });
+            onChangeTask({ ...task, isEditing: true });
           }}
         >
           Edit
@@ -58,8 +59,7 @@ const Task = ({ task, onEditTask }) => {
         type="checkbox"
         checked={task.done}
         onChange={() => {
-          let action = "complete";
-          onEditTask(action, { ...task, done: !task.done });
+          onChangeTask({ ...task, done: !task.done });
         }}
       />
 
@@ -67,8 +67,7 @@ const Task = ({ task, onEditTask }) => {
 
       <button
         onClick={() => {
-          let action = "delete";
-          onEditTask(action, task);
+          onDeleteTask(task.id);
         }}
       >
         Delete

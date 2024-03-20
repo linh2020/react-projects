@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 let nextId = 3;
 
-export default function AddTask({ onEditTask }) {
+export default function AddTask({ onAddTask }) {
   const [text, setText] = useState("");
 
   return (
@@ -15,15 +15,8 @@ export default function AddTask({ onEditTask }) {
       />
       <button
         onClick={() => {
-          let action = "add";
-          let task = {
-            id: nextId++,
-            text: text,
-            done: false,
-            isEditing: false,
-          };
           setText("");
-          onEditTask(action, task);
+          onAddTask(text);
         }}
       >
         Add
