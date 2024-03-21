@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const TaskList = ({ tasks, onChangeTask, onDeleteTask, onEditTask }) => {
   return (
@@ -17,6 +17,8 @@ export const TaskList = ({ tasks, onChangeTask, onDeleteTask, onEditTask }) => {
 };
 
 const Task = ({ task, onChangeTask, onDeleteTask, onEditTask }) => {
+  const [text, setText] = useState(task.text);
+
   let taskContent;
 
   if (task.isEditing) {
@@ -24,11 +26,13 @@ const Task = ({ task, onChangeTask, onDeleteTask, onEditTask }) => {
       <>
         <input
           type="text"
-          value={task.text}
-          onChange={(e) => onEditTask({ ...task, text: e.target.value })}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         />
         <button
-          onClick={() => onEditTask({ ...task, isEditing: !task.isEditing })}
+          onClick={() =>
+            onEditTask({ ...task, text: text, isEditing: !task.isEditing })
+          }
         >
           Save
         </button>
@@ -47,8 +51,8 @@ const Task = ({ task, onChangeTask, onDeleteTask, onEditTask }) => {
     );
   }
 
-  console.log("Task");
-  console.log(task);
+  // console.log("Task");
+  // console.log(task);
 
   return (
     <li>
