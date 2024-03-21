@@ -1,22 +1,22 @@
 import React from "react";
 
-export default function TaskList({ tasks, onChangeTask, onDeleteTask }) {
+export const TaskList = ({ tasks, onChangeTask, onDeleteTask, onEditTask }) => {
   return (
     <ul>
       {tasks.map((task) => (
-        <li key={task.id}>
-          <Task
-            task={task}
-            onChangeTask={onChangeTask}
-            onDeleteTask={onDeleteTask}
-          />
-        </li>
+        <Task
+          key={task.id}
+          task={task}
+          onChangeTask={onChangeTask}
+          onDeleteTask={onDeleteTask}
+          onEditTask={onEditTask}
+        />
       ))}
     </ul>
   );
-}
+};
 
-const Task = ({ task, onChangeTask, onDeleteTask }) => {
+const Task = ({ task, onChangeTask, onDeleteTask, onEditTask }) => {
   let taskContent;
 
   if (task.isEditing) {
@@ -25,14 +25,10 @@ const Task = ({ task, onChangeTask, onDeleteTask }) => {
         <input
           type="text"
           value={task.text}
-          onChange={(e) => {
-            onChangeTask({ ...task, text: e.target.value });
-          }}
+          onChange={(e) => onEditTask({ ...task, text: e.target.value })}
         />
         <button
-          onClick={() => {
-            onChangeTask({ ...task, isEditing: false });
-          }}
+          onClick={() => onEditTask({ ...task, isEditing: !task.isEditing })}
         >
           Save
         </button>
@@ -43,9 +39,7 @@ const Task = ({ task, onChangeTask, onDeleteTask }) => {
       <>
         {task.text}
         <button
-          onClick={() => {
-            onChangeTask({ ...task, isEditing: true });
-          }}
+          onClick={() => onEditTask({ ...task, isEditing: !task.isEditing })}
         >
           Edit
         </button>
@@ -53,8 +47,11 @@ const Task = ({ task, onChangeTask, onDeleteTask }) => {
     );
   }
 
+  console.log("Task");
+  console.log(task);
+
   return (
-    <label>
+    <li>
       <input
         type="checkbox"
         checked={task.done}
@@ -62,16 +59,8 @@ const Task = ({ task, onChangeTask, onDeleteTask }) => {
           onChangeTask({ ...task, done: !task.done });
         }}
       />
-
       {taskContent}
-
-      <button
-        onClick={() => {
-          onDeleteTask(task.id);
-        }}
-      >
-        Delete
-      </button>
-    </label>
+      <button onClick={() => onDeleteTask(task)}>Delete</button>
+    </li>
   );
 };

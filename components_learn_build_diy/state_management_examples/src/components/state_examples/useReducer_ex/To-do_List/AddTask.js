@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 
-let nextId = 3;
-
-export default function AddTask({ onAddTask }) {
+export const AddTask = ({ onAddTask }) => {
   const [text, setText] = useState("");
 
   return (
     <>
       <input
         type="text"
-        placeholder="Add Task"
+        placeholder="Add task"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
@@ -23,4 +21,4 @@ export default function AddTask({ onAddTask }) {
       </button>
     </>
   );
-}
+};

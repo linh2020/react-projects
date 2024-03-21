@@ -1,6 +1,6 @@
 import "./App.css";
 import ToDoList_UseState from "./components/state_examples/UseState_ex/To-do_List/ToDoList_UseState";
-import ToDoList_useReducer from "./components/state_examples/useReducer_ex/To-do_List/ToDoList_useReducer";
+import { ToDoList_useReducer } from "./components/state_examples/useReducer_ex/To-do_List/ToDoList_useReducer";
 
 // import { ToDoList_useReducer } from "./components/state_examples/useReducer_ex/To-do_List/ToDoList_useReducer";
 
