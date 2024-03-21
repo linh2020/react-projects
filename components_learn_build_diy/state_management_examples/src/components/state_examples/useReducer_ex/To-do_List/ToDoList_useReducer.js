@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import { AddTask } from "./AddTask";
 import { TaskList } from "./TaskList";
 
-let nextId = 3;
+// let nextId = 3;
 const initialTasks = [
   { id: 0, text: "Visit Kafka Museum", done: true, isEditing: false },
   { id: 1, text: "Watch a puppet show", done: false, isEditing: false },
@@ -12,19 +12,20 @@ const initialTasks = [
 const reducerFunc = (tasks, action) => {
   switch (action.type) {
     case "added": {
-      return [
-        ...tasks,
-        { id: action.id, text: action.text, done: false, isEditing: false },
-      ];
+      return [...tasks, action.task];
     }
     case "changed": {
-      return tasks.map((t) => (t.id === action.task.id ? action.task : t));
+      return tasks.map((task) =>
+        task.id === action.task.id ? action.task : task
+      );
     }
     case "deleted": {
-      return tasks.filter((t) => t.id !== action.task.id);
+      return tasks.filter((task) => task.id !== action.taskId);
     }
     case "edited": {
-      return tasks.map((t) => (t.id === action.task.id ? action.task : t));
+      return tasks.map((task) =>
+        task.id === action.task.id ? action.task : task
+      );
     }
     default:
       throw Error("Unknown action: " + action.type);
@@ -34,11 +35,10 @@ const reducerFunc = (tasks, action) => {
 export const ToDoList_useReducer = () => {
   const [tasks, dispatch] = useReducer(reducerFunc, initialTasks);
 
-  const onAddTask = (text) => {
+  const onAddTask = (task) => {
     dispatch({
       type: "added",
-      id: nextId++,
-      text: text,
+      task: task,
     });
   };
 
@@ -49,10 +49,10 @@ export const ToDoList_useReducer = () => {
     });
   };
 
-  const onDeleteTask = (task) => {
+  const onDeleteTask = (taskId) => {
     dispatch({
       type: "deleted",
-      task: task,
+      taskId: taskId,
     });
   };
 

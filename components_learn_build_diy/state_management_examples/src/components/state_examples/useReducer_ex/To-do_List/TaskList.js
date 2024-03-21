@@ -30,9 +30,7 @@ const Task = ({ task, onChangeTask, onDeleteTask, onEditTask }) => {
           onChange={(e) => setText(e.target.value)}
         />
         <button
-          onClick={() =>
-            onEditTask({ ...task, text: text, isEditing: !task.isEditing })
-          }
+          onClick={() => onEditTask({ ...task, text: text, isEditing: false })}
         >
           Save
         </button>
@@ -42,9 +40,7 @@ const Task = ({ task, onChangeTask, onDeleteTask, onEditTask }) => {
     taskContent = (
       <>
         {task.text}
-        <button
-          onClick={() => onEditTask({ ...task, isEditing: !task.isEditing })}
-        >
+        <button onClick={() => onEditTask({ ...task, isEditing: true })}>
           Edit
         </button>
       </>
@@ -64,7 +60,7 @@ const Task = ({ task, onChangeTask, onDeleteTask, onEditTask }) => {
         }}
       />
       {taskContent}
-      <button onClick={() => onDeleteTask(task)}>Delete</button>
+      <button onClick={() => onDeleteTask(task.id)}>Delete</button>
     </li>
   );
 };
