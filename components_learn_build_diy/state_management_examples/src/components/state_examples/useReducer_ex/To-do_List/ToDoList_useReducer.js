@@ -67,7 +67,7 @@ export const ToDoList_useReducer = () => {
 
   return (
     <>
-      <h1>Prague itinerary</h1>
+      <h1>Prague itinerary - ToDoList_useReducer()</h1>
       <AddTask onAddTask={onAddTask} />
       <TaskList
         tasks={tasks}
