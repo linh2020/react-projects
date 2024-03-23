@@ -11,7 +11,7 @@ function App() {
 
       {/* useMemo() */}
       {/* <UseMemo /> */}
-      <UseMemo2 />
+      {/* <UseMemo2 /> */}
       <UseMemo3 />
 
       {/*  */}
