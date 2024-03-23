@@ -26,6 +26,7 @@ export default function UseMemo2() {
 
   return (
     <div>
+    <h2>UseMemo2</h2>
       <button onClick={handleInsert}>Insert</button> Chars: {chars}
       <br />
       <button onClick={handleAdd}>Total</button> Total: {res}
