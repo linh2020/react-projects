@@ -81,10 +81,10 @@ function App() {
       const result = await axios("https://api.tvmaze.com/search/shows?q=snow");
       setData(result.data);
 
-      // console.log(result.data);
+      console.log(result.data);
     })();
 
-    console.log(data);
+    // console.log(data);
   }, []);
 
   return (
