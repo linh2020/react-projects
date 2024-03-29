@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { useSortBy, useTable } from "react-table";
+import { useGlobalFilter, useSortBy, useTable } from "react-table";
 
 import tw from "twin.macro";
+import GlobalFilter from "./GlobalFilter";
 
 const Table = tw.table`
   table-fixed
@@ -151,8 +152,19 @@ export function Products(props) {
     () =>
       products[0]
         ? Object.keys(products[0])
-            .filter((key) => key !== "rating" && key !== "image")
-            .map((key) => ({ Header: key, accessor: key }))
+            .filter((key) => key !== "rating")
+            .map((key) => {
+              if (key === "image") {
+                return {
+                  Header: key,
+                  accessor: key,
+                  Cell: ({ value }) => (
+                    <img src={value} alt="value" style={{ width: 75 }} />
+                  ),
+                };
+              }
+              return { Header: key, accessor: key };
+            })
         : [],
     [products]
   );
@@ -179,12 +191,21 @@ export function Products(props) {
       columns: productsColumns,
       data: productsData,
     },
-    tableHooks,
-    useSortBy
+    useGlobalFilter,
+    useSortBy,
+    tableHooks
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance;
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state,
+  } = tableInstance;
 
   useEffect(() => {
     fetchProducts();
@@ -193,40 +214,47 @@ export function Products(props) {
   const isEven = (index) => index % 2 === 0;
 
   return (
-    <Table {...getTableProps()}>
-      <TableHead>
-        {headerGroups.map((headerGroup) => (
-          <TableRow {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <TableHeader
-                {...column.getHeaderProps(column.getSortByToggleProps())}
-              >
-                {column.render("Header")}
-                <span>
-                  {column.isSorted ? (column.isSortedDesc ? "🔽" : "🔼") : ""}
-                </span>
-              </TableHeader>
-            ))}
-          </TableRow>
-        ))}
-      </TableHead>
-      <TableBody {...getTableBodyProps()}>
-        {rows.map((row, index) => {
-          prepareRow(row);
-          return (
-            <TableRow
-              {...row.getRowProps()}
-              className={isEven(index) ? "bg-blue-200" : ""}
-            >
-              {row.cells.map((cell, index) => (
-                <TableData {...cell.getCellProps()}>
-                  {cell.render("Cell")}
-                </TableData>
+    <>
+      <GlobalFilter
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        setGlobalFilter={setGlobalFilter}
+        globalFilter={state.globalFilter}
+      />
+      <Table {...getTableProps()}>
+        <TableHead>
+          {headerGroups.map((headerGroup) => (
+            <TableRow {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <TableHeader
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                >
+                  {column.render("Header")}
+                  <span>
+                    {column.isSorted ? (column.isSortedDesc ? "🔽" : "🔼") : ""}
+                  </span>
+                </TableHeader>
               ))}
             </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+          ))}
+        </TableHead>
+        <TableBody {...getTableBodyProps()}>
+          {rows.map((row, index) => {
+            prepareRow(row);
+            return (
+              <TableRow
+                {...row.getRowProps()}
+                className={isEven(index) ? "bg-blue-200" : ""}
+              >
+                {row.cells.map((cell, index) => (
+                  <TableData {...cell.getCellProps()}>
+                    {cell.render("Cell")}
+                  </TableData>
+                ))}
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </>
   );
 }
