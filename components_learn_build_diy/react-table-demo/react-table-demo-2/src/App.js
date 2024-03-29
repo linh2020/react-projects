@@ -19,6 +19,7 @@ const AppContainer = tw.div`
 const Title = tw.h1`
   text-2xl
   font-semibold
+  // bg-green-300
 `;
 
 function App() {

@@ -17,6 +17,7 @@ const TableHead = tw.thead`
 const TableRow = tw.tr`
     border
     border-green-500
+    // bg-green-300
 `;
 
 const TableHeader = tw.th`
@@ -45,6 +46,10 @@ const Button = tw.button`
     bg-green-300
     hover:bg-green-200
     transition-colors
+`;
+
+const EvenRow = tw.span`
+  bg-blue-300
 `;
 
 export function Products(props) {
@@ -146,7 +151,7 @@ export function Products(props) {
     () =>
       products[0]
         ? Object.keys(products[0])
-            .filter((key) => key !== "rating")
+            .filter((key) => key !== "rating" && key !== "image")
             .map((key) => ({ Header: key, accessor: key }))
         : [],
     [products]
@@ -154,10 +159,28 @@ export function Products(props) {
 
   console.log("productsColumns: ", productsColumns);
 
-  const tableInstance = useTable({
-    columns: productsColumns,
-    data: productsData,
-  });
+  const tableHooks = (hooks) => {
+    hooks.visibleColumns.push((columns) => [
+      ...columns,
+      {
+        id: "edit",
+        Header: "Edit",
+        Cell: ({ row }) => (
+          <Button onClick={() => alert("Price: " + row.values.price)}>
+            Edit
+          </Button>
+        ),
+      },
+    ]);
+  };
+
+  const tableInstance = useTable(
+    {
+      columns: productsColumns,
+      data: productsData,
+    },
+    tableHooks
+  );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
@@ -165,6 +188,8 @@ export function Products(props) {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  const isEven = (index) => index % 2 === 0;
 
   return (
     <Table {...getTableProps()}>
@@ -183,7 +208,10 @@ export function Products(props) {
         {rows.map((row, index) => {
           prepareRow(row);
           return (
-            <TableRow {...row.getRowProps()}>
+            <TableRow
+              {...row.getRowProps()}
+              className={isEven(index) ? "bg-blue-200" : ""}
+            >
               {row.cells.map((cell, index) => (
                 <TableData {...cell.getCellProps()}>
                   {cell.render("Cell")}
