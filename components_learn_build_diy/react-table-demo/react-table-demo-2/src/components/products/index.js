@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { useTable } from "react-table";
+import { useSortBy, useTable } from "react-table";
 
 import tw from "twin.macro";
 
@@ -179,7 +179,8 @@ export function Products(props) {
       columns: productsColumns,
       data: productsData,
     },
-    tableHooks
+    tableHooks,
+    useSortBy
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -197,8 +198,13 @@ export function Products(props) {
         {headerGroups.map((headerGroup) => (
           <TableRow {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              <TableHeader {...column.getHeaderProps()}>
+              <TableHeader
+                {...column.getHeaderProps(column.getSortByToggleProps())}
+              >
                 {column.render("Header")}
+                <span>
+                  {column.isSorted ? (column.isSortedDesc ? "🔽" : "🔼") : ""}
+                </span>
               </TableHeader>
             ))}
           </TableRow>
