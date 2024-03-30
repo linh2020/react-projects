@@ -26,3 +26,14 @@ tfoot {
   background-color: #04aa6d;
   color: white;
 }
+
+.globalFilter {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.globalFilter input {
+  padding: 8px;
+  border: 2px solid #04aa6d;
+  border-radius: 10px;
+}

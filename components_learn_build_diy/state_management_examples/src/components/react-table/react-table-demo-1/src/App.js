@@ -1,5 +1,6 @@
 import "./App.css";
 import { BasicTable } from "./components/BasicTable";
+import { FilteringTable } from "./components/FilteringTable";
 import { SortingTable } from "./components/SortingTable";
 
 function App() {
@@ -7,7 +8,8 @@ function App() {
     <div className="App">
       <h1>React Table</h1>
       {/* <BasicTable /> */}
-      <SortingTable />
+      {/* <SortingTable /> */}
+      <FilteringTable />
     </div>
   );
 }
