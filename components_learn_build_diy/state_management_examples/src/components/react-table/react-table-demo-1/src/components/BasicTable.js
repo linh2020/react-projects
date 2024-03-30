@@ -1,16 +1,22 @@
 import React from "react";
 import { useTable } from "react-table";
 import MOCK_DATA from "./MOCK_DATA.json";
-import { COLUMNS } from "./columns";
+import { COLUMNS, GROUPED_COLUMNS } from "./columns";
 import { useMemo } from "react";
 import "./table.css";
 
 export const BasicTable = () => {
-  const columns = useMemo(() => COLUMNS, []);
+  const columns = useMemo(() => GROUPED_COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
 
-  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
-    useTable({ columns: columns, data: data });
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    footerGroups,
+    prepareRow,
+    rows,
+  } = useTable({ columns: columns, data: data });
 
   return (
     <table {...getTableProps()}>
@@ -36,6 +42,15 @@ export const BasicTable = () => {
           );
         })}
       </tbody>
+      <tfoot>
+        {footerGroups.map((footerGroup) => (
+          <tr {...footerGroup.getFooterGroupProps}>
+            {footerGroup.headers.map((column) => (
+              <td {...column.getFooterProps}>{column.render("Footer")}</td>
+            ))}
+          </tr>
+        ))}
+      </tfoot>
     </table>
   );
 };
