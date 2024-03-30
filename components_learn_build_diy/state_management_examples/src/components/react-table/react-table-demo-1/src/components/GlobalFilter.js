@@ -9,3 +9,4 @@ export const GlobalFilter = ({ filter, setFilter }) => {
     </span>
   );
 };
+
