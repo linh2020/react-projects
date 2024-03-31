@@ -39,7 +39,8 @@ export const GROUPED_COLUMNS = [
     Header: "Id",
     Footer: "Id",
     accessor: "id",
-    Filter: ColumnFilter,
+    // Filter: ColumnFilter,
+    // disableFilters: true,
   },
   {
     Header: "Name",
@@ -49,13 +50,14 @@ export const GROUPED_COLUMNS = [
         Header: "First Name",
         Footer: "First Name",
         accessor: "first_name",
-        Filter: ColumnFilter,
+        // Filter: ColumnFilter,
+        // disableFilters: true
       },
       {
         Header: "Last Name",
         Footer: "Last Name",
         accessor: "last_name",
-        Filter: ColumnFilter,
+        // Filter: ColumnFilter,
       },
     ],
   },
@@ -70,19 +72,19 @@ export const GROUPED_COLUMNS = [
         Cell: ({ value }) => {
           return format(new Date(value), "dd/MM/yyyy");
         },
-        Filter: ColumnFilter,
+        // Filter: ColumnFilter,
       },
       {
         Header: "Country",
         Footer: "Country",
         accessor: "country",
-        Filter: ColumnFilter,
+        // Filter: ColumnFilter,
       },
       {
         Header: "Phone",
         Footer: "Phone",
         accessor: "phone",
-        Filter: ColumnFilter,
+        // Filter: ColumnFilter,
       },
     ],
   },

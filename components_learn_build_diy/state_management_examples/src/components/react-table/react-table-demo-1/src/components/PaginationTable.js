@@ -1,13 +1,20 @@
 import React from "react";
-import { useTable, useSortBy, useGlobalFilter, useFilters } from "react-table";
+import {
+  useTable,
+  useSortBy,
+  useGlobalFilter,
+  useFilters,
+  usePagination,
+} from "react-table";
 import MOCK_DATA from "./MOCK_DATA.json";
 import { COLUMNS, GROUPED_COLUMNS } from "./columns";
 import { useMemo } from "react";
-import "./table.css";
 import { GlobalFilter } from "./GlobalFilter";
 import { ColumnFilter } from "./ColumnFilter";
 
-export const FilteringTable = () => {
+import "./table.css";
+
+export const PaginationTable = () => {
   const columns = useMemo(() => GROUPED_COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
 
@@ -21,21 +28,30 @@ export const FilteringTable = () => {
     headerGroups,
     footerGroups,
     prepareRow,
-    rows,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
     state,
     setGlobalFilter,
   } = useTable(
     { columns, data, defaultColumn },
     useFilters,
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    usePagination
   );
 
-  const { globalFilter } = state;
+  const { pageIndex, globalFilter } = state;
 
   return (
     <>
-      <GlobalFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+      <GlobalFilter
+        globalFilter={globalFilter}
+        setGlobalFilter={setGlobalFilter}
+      />
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -56,7 +72,7 @@ export const FilteringTable = () => {
         </thead>
 
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -67,16 +83,21 @@ export const FilteringTable = () => {
             );
           })}
         </tbody>
-        <tfoot>
-          {footerGroups.map((footerGroup) => (
-            <tr {...footerGroup.getFooterGroupProps}>
-              {footerGroup.headers.map((column) => (
-                <td {...column.getFooterProps}>{column.render("Footer")}</td>
-              ))}
-            </tr>
-          ))}
-        </tfoot>
       </table>
+      <div className="pagination-btn">
+        <span>
+          Page{" "}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>
+        </span>
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          Previous
+        </button>
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          Next
+        </button>
+      </div>
     </>
   );
 };

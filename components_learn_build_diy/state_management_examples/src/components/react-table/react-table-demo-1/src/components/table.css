@@ -47,3 +47,10 @@ tfoot {
   border: 2px solid #04aa6d;
   border-radius: 10px;
 }
+
+.pagination-btn {
+  margin: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
