@@ -54,3 +54,12 @@ tfoot {
   justify-content: center;
   gap: 12px;
 }
+
+input {
+  margin: 0 4px;
+  padding: 0 4px;
+}
+
+.goToPage-btn {
+  width: 30px;
+}

@@ -34,17 +34,20 @@ export const PaginationTable = () => {
     canNextPage,
     canPreviousPage,
     pageOptions,
+    gotoPage,
+    pageCount,
+    setPageSize,
     state,
     setGlobalFilter,
   } = useTable(
-    { columns, data, defaultColumn },
+    { columns, data, defaultColumn, initialState: { pageIndex: 0 } },
     useFilters,
     useGlobalFilter,
     useSortBy,
     usePagination
   );
 
-  const { pageIndex, globalFilter } = state;
+  const { pageIndex, globalFilter, pageSize } = state;
 
   return (
     <>
@@ -84,6 +87,7 @@ export const PaginationTable = () => {
           })}
         </tbody>
       </table>
+
       <div className="pagination-btn">
         <span>
           Page{" "}
@@ -91,11 +95,58 @@ export const PaginationTable = () => {
             {pageIndex + 1} of {pageOptions.length}
           </strong>
         </span>
+
+        {/* Go to page */}
+        <span>
+          | Go to page
+          <input
+            className="goToPage-btn"
+            type="text"
+            value={pageIndex + 1}
+            // defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              gotoPage(e.target.value ? Number(e.target.value - 1) : 0);
+            }}
+          />
+        </span>
+
+        <select
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+            window.scrollTo(0, 0);
+          }}
+        >
+          {[10, 25, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+
+        <button
+          onClick={() => {
+            gotoPage(0);
+          }}
+          disabled={!canPreviousPage}
+        >
+          {"<<"}
+        </button>
+
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
           Previous
         </button>
         <button onClick={() => nextPage()} disabled={!canNextPage}>
           Next
+        </button>
+
+        <button
+          onClick={() => {
+            gotoPage(pageCount - 1); // can use pageOptions.length - 1
+          }}
+          disabled={!canNextPage}
+        >
+          {">>"}
         </button>
       </div>
     </>
