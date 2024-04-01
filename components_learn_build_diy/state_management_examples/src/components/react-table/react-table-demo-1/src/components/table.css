@@ -63,3 +63,7 @@ input {
 .goToPage-btn {
   width: 30px;
 }
+
+.shown-raw-data {
+  text-align: left;
+}
