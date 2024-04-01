@@ -67,3 +67,11 @@ input {
 .shown-raw-data {
   text-align: left;
 }
+
+.change-order-btn {
+  margin: 10px;
+  padding: 8px;
+  font-size: 22px;
+  border-radius: 12px;
+  border: 2px solid #04aa6d;
+}
