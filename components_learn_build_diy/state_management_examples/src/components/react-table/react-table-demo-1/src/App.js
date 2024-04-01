@@ -18,8 +18,8 @@ function App() {
       {/* <PaginationTable /> */}
       {/* <RowSelection /> */}
       {/* <ColumnOrder /> */}
-      {/* <ColumnHiding /> */}
-      <StickyTable />
+      <ColumnHiding />
+      {/* <StickyTable /> */}
     </div>
   );
 }
