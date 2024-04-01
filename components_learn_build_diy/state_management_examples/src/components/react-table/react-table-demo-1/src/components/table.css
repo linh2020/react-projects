@@ -75,3 +75,7 @@ input {
   border-radius: 12px;
   border: 2px solid #04aa6d;
 }
+
+.chk-hiding {
+  text-align: left;
+}
