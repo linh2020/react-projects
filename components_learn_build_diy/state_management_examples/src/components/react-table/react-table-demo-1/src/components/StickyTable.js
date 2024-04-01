@@ -12,7 +12,6 @@ import {
 import { useSticky } from "react-table-sticky";
 import { Styles } from "./TableStyles";
 
-
 import MOCK_DATA from "./MOCK_DATA.json";
 import { COLUMNS, GROUPED_COLUMNS } from "./columns";
 import { useMemo } from "react";
