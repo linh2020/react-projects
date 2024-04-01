@@ -39,6 +39,7 @@ export const GROUPED_COLUMNS = [
     Header: "Id",
     Footer: "Id",
     accessor: "id",
+    sticky: "left",
     // Filter: ColumnFilter,
     // disableFilters: true,
   },
@@ -50,6 +51,7 @@ export const GROUPED_COLUMNS = [
         Header: "First Name",
         Footer: "First Name",
         accessor: "first_name",
+        // sticky: "left",
         // Filter: ColumnFilter,
         // disableFilters: true
       },
@@ -57,6 +59,7 @@ export const GROUPED_COLUMNS = [
         Header: "Last Name",
         Footer: "Last Name",
         accessor: "last_name",
+        // sticky: "left",
         // Filter: ColumnFilter,
       },
     ],
